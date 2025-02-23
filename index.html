@@ -38,7 +38,7 @@
 <body>
     <h1>HTML File Viewer</h1>
     <div id="file-list">
-        <button onclick="loadFile('Scammerdatabase/1269124315295776824.html')">Jimmy [1269124315295776824].html</button>
+        <button onclick="loadFile('scammerdatabase/1269124315295776824.html')">Jimmy [1269124315295776824].html</button>
     </div>
     <button onclick="goBack()">Back to Main</button>
     <iframe id="viewer" src=""></iframe>
@@ -47,19 +47,17 @@
     <script>
         async function fetchFiles() {
             try {
-                const repo = "scammers/Scammerdatabase"; // Change to your repo path
-                const response = await fetch(`https://api.github.com/repos/${repo}/Scammerdatabase`);
+                const repo = "scammers/scammerdatabase"; // Change to your repo path
+                const response = await fetch(`https://api.github.com/repos/YOUR_GITHUB_USERNAME/scammers/contents/scammerdatabase`);
                 const data = await response.json();
                 const fileList = document.getElementById("file-list");
-                const viewer = document.getElementById("viewer");
-                const codeViewer = document.getElementById("code-viewer");
                 
                 data.forEach(file => {
                     if (file.name.endsWith(".html")) {
                         let button = document.createElement("button");
                         button.textContent = file.name;
                         button.onclick = async () => {
-                            loadFile(`Scammerdatabase/${file.name}`);
+                            loadFile(`scammerdatabase/${file.name}`);
                         };
                         fileList.appendChild(button);
                     }
@@ -70,7 +68,7 @@
         }
         
         async function loadFile(filePath) {
-            const baseURL = "https://raw.githubusercontent.com/scammers/"; // Change to your actual raw file base URL
+            const baseURL = "https://ducks-quacky.github.io/scammers/"; // GitHub Pages URL
             const fileURL = baseURL + filePath;
             document.getElementById("viewer").src = fileURL;
             history.pushState(null, "", "?file=" + filePath);
@@ -85,9 +83,7 @@
         }
         
         function goBack() {
-            document.getElementById("viewer").src = "";
-            document.getElementById("code-viewer").textContent = "";
-            history.pushState(null, "", "?");
+            window.location.href = "index.html";
         }
         
         fetchFiles();
