@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML File Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #file-list {
+            margin: 20px auto;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        iframe {
+            width: 90%;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        pre {
+            width: 90%;
+            margin: 20px auto;
+            text-align: left;
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML File Viewer</h1>
+    <div id="file-list">
+        <button onclick="loadFile('Scammerdatabase/Jimmy%20[1269124315295776824].html')">Jimmy [1269124315295776824].html</button>
+    </div>
+    <button onclick="goBack()">Back to Main</button>
+    <iframe id="viewer" src=""></iframe>
+    <pre id="code-viewer"></pre>
+    
+    <script>
+        async function fetchFiles() {
+            try {
+                const repo = "scammers/Scammerdatabase"; // Change to your repo path
+                const response = await fetch(`https://api.github.com/repos/${repo}/contents/Scammerdatabase`);
+                const data = await response.json();
+                const fileList = document.getElementById("file-list");
+                const viewer = document.getElementById("viewer");
+                const codeViewer = document.getElementById("code-viewer");
+                
+                data.forEach(file => {
+                    if (file.name.endsWith(".html")) {
+                        let button = document.createElement("button");
+                        button.textContent = file.name;
+                        button.onclick = async () => {
+                            loadFile(`Scammerdatabase/${file.name}`);
+                        };
+                        fileList.appendChild(button);
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching file list:", error);
+            }
+        }
+        
+        async function loadFile(filePath) {
+            const baseURL = "https://raw.githubusercontent.com/scammers/main/"; // Change to your actual raw file base URL
+            const fileURL = baseURL + filePath;
+            document.getElementById("viewer").src = fileURL;
+            history.pushState(null, "", "?file=" + filePath);
+            
+            try {
+                const fileResponse = await fetch(fileURL);
+                const fileText = await fileResponse.text();
+                document.getElementById("code-viewer").textContent = fileText;
+            } catch (error) {
+                console.error("Error loading file:", error);
+            }
+        }
+        
+        function goBack() {
+            document.getElementById("viewer").src = "";
+            document.getElementById("code-viewer").textContent = "";
+            history.pushState(null, "", "?");
+        }
+        
+        fetchFiles();
+    </script>
+</body>
+</html>
