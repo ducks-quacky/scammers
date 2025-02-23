@@ -70,7 +70,7 @@
         }
         
         async function loadFile(filePath) {
-            const baseURL = "https://raw.githubusercontent.com/scammers/main/"; // Change to your actual raw file base URL
+            const baseURL = "https://raw.githubusercontent.com/scammers/"; // Change to your actual raw file base URL
             const fileURL = baseURL + filePath;
             document.getElementById("viewer").src = fileURL;
             history.pushState(null, "", "?file=" + filePath);
