@@ -58,7 +58,7 @@
                         let button = document.createElement("button");
                         button.textContent = file.name;
                         button.onclick = async () => {
-                            loadFile(`scammerdatabase/${file.name}`);
+                            loadFile(`scammerdatabase/{file.name}`);
                         };
                         fileList.appendChild(button);
                     }
