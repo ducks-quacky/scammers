@@ -53,13 +53,13 @@
                 const data = await response.json();
                 const fileList = document.getElementById("file-list");
                 
-                data.forEach(file => {
-                    if (file.name.endsWith(".html")) {
-                        let button = document.createElement("button");
-                        button.textContent = file.name;
-                        button.onclick = async () => {
-                            loadFile(`scammerdatabase/${file.name}`);
-                        };
+        //        data.forEach(file => {
+        //            if (file.name.endsWith(".html")) {
+        //                let button = document.createElement("button");
+         //               button.textContent = file.name;
+         //               button.onclick = async () => {
+         //                   loadFile(`scammerdatabase/${file.name}`);
+          //              };
                         fileList.appendChild(button);
                     }
                 });
