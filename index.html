@@ -3,47 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stuxfian Scammer database</title>
+    <title>Stuxfian Scammer Database</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #0c0c0c;
+            color: #fff; /* Light text color for better contrast */
             text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #EB5959; /* Updated red color */
+            color: white;
+            padding: 20px 0;
+            margin: 0 0 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #navigation {
+            display: flex;
+            justify-content: start;
+            padding: 20px;
+            background-color: #161616;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow-x: auto; /* Add horizontal scroll if needed */
         }
         #file-list {
-            margin: 20px auto;
+            display: flex;
+            flex-wrap: nowrap; /* No wrap to keep buttons in a single line */
+            justify-content: flex-start;
+            padding: 20px;
         }
         button {
+            background-color: #EB5959; /* Updated red color */
+            color: white;
+            border: none;
             margin: 5px;
-            padding: 10px;
+            padding: 10px 25px;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #d44f4f; /* Darker shade of the updated red color */
+        }
+        .back-button {
+            height: auto; /* Same height as other buttons */
         }
         iframe {
-            width: 90%;
-            height: 500px;
+            width: 95%; /* Increased width */
+            height: 600px; /* Increased height */
             border: 1px solid #ccc;
-            margin-top: 20px;
-        }
-        pre {
-            width: 90%;
-            margin: 20px auto;
-            text-align: left;
-            background: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ccc;
-            overflow-x: auto;
-            white-space: pre-wrap;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <h1>Stuxfian Scammer database</h1>
-    <div id="file-list">
-       <button onclick="loadFile('Scammerdatabase/997636615927242812.html')">997636615927242812</button>
-    <button onclick="loadFile('Scammerdatabase/1018248408038899892.html')">1018248408038899892</button> 
+    <header>
+        <h1>Stuxfian Scammer Database</h1>
+    </header>
+    <div id="navigation">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <div id="file-list">
+            <button onclick="loadFile('Scammerdatabase/997636615927242812.html')">997636615927242812</button>
+            <button onclick="loadFile('Scammerdatabase/1018248408038899892.html')">1018248408038899892</button>
+        </div>
     </div>
-    <button onclick="goBack()">Back</button>
     <iframe id="viewer" src=""></iframe>
-    <pre id="code-viewer"></pre>
     
     <script>
         async function fetchFiles() {
@@ -54,14 +83,6 @@
                 const fileList = document.getElementById("file-list");
                 
                 data.forEach(file => {
-                    if (file.name.endsWith(".html")) {
-                        let button = document.createElement("button");
-                        button.textContent = file.name;
-                        button.onclick = async () => {
-                            loadFile(`scammerdatabase/{file.name}`);
-                        };
-                  //      fileList.appendChild(button);
-                    }
                 });
             } catch (error) {
                 console.error("Error fetching file list:", error);
@@ -77,7 +98,6 @@
             try {
                 const fileResponse = await fetch(fileURL);
                 const fileText = await fileResponse.text();
-                document.getElementById("code-viewer").textContent = fileText;
             } catch (error) {
                 console.error("Error loading file:", error);
             }
